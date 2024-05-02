@@ -83,5 +83,5 @@ test:
 production:
   <<: *default
   database: course_catalog_api_production
-  username: course_catalog_api
-  password: <%= ENV['COURSE_CATALOG_API_DATABASE_PASSWORD'] %>
+  username: gyan
+  password: <%= ENV['DATABASE_URL'] %>

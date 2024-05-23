@@ -8,19 +8,19 @@ module Api
         params[:query] ||= '*'
 
         @categories = Category.search(params[:query], **search_options)
-        render json: @categories.results, status: :ok
+        render json: @categories, each_serializer: Api::V1::CategorySerializer, status: :ok
       end
 
       # GET /api/v1/categories/1
       def show
-        render json: @category, status: :ok
+        render json: @category, serializer: Api::V1::CategorySerializer, status: :ok
       end
 
       # POST /api/v1/categories
       def create
         @category = Category.new(category_params)
         if @category.save
-          render json: @category, status: :created
+          render json: @category, serializer: Api::V1::CategorySerializer, status: :created
         else
           render json: @category.errors, status: :unprocessable_entity
         end
@@ -29,7 +29,7 @@ module Api
       # PATCH/PUT /api/v1/categories/1
       def update
         if @category.update(category_params)
-          render json: @category
+          render json: @category, serializer: Api::V1::CategorySerializer
         else
           render json: @category.errors, status: :unprocessable_entity
         end

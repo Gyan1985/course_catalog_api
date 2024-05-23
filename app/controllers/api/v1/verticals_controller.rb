@@ -8,19 +8,19 @@ module Api
         params[:query] ||= '*'
 
         @verticals = Vertical.search(params[:query], **search_options)
-        render json: @verticals.results
+        render json: @verticals.results, each_serializer: Api::V1::VerticalSerializer
       end
 
       # GET /api/v1/verticals/1
       def show
-        render json: @vertical
+        render json: @vertical, serializer: Api::V1::VerticalSerializer
       end
 
       # POST /api/v1/verticals
       def create
         @vertical = Vertical.new(vertical_params)
         if @vertical.save
-          render json: @vertical, status: :created
+          render json: @vertical, serializer: Api::V1::VerticalSerializer, status: :created
         else
           render json: @vertical.errors, status: :unprocessable_entity
         end
@@ -29,7 +29,7 @@ module Api
       # PATCH/PUT /api/v1/verticals/1
       def update
         if @vertical.update(vertical_params)
-          render json: @vertical
+          render json: @vertical, serializer: Api::V1::VerticalSerializer
         else
           render json: @vertical.errors, status: :unprocessable_entity
         end

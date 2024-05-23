@@ -43,9 +43,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'searchkick'
 gem "elasticsearch" 
 
-gem 'doorkeeper'
-
 # Use JWT gem for token-based authentication
 gem 'jwt'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'active_model_serializers'

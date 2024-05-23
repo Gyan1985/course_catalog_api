@@ -8,19 +8,19 @@ module Api
         params[:query] ||= '*'
 
         @courses = Course.search(params[:query], **search_options)
-        render json: @courses.results
+        render json: @courses.results, each_serializer: Api::V1::CourseSerializer
       end
 
       # GET /api/v1/courses/1
       def show
-        render json: @course
+        render json: @course, serializer: Api::V1::CourseSerializer
       end
 
       # POST /api/v1/courses
       def create
         @course = Course.new(course_params)
         if @course.save
-          render json: @course, status: :created
+          render json: @course, serializer: Api::V1::CourseSerializer, status: :created
         else
           render json: @course.errors, status: :unprocessable_entity
         end
@@ -29,7 +29,7 @@ module Api
       # PATCH/PUT /api/v1/courses/1
       def update
         if @course.update(course_params)
-          render json: @course
+          render json: @course, serializer: Api::V1::CourseSerializer
         else
           render json: @course.errors, status: :unprocessable_entity
         end
